@@ -8,14 +8,14 @@ namespace CalculadoraConsole.Models
 {
     class Calculadora
     {
-        public int PrimeiroValor { get; set; }
-        public int SegundoValor { get; set; }
+        public double PrimeiroValor { get; set; }
+        public double SegundoValor { get; set; }
 
         public Calculadora()
         {
         }
 
-        public Calculadora(int primeiroValor, int segundoValor)
+        public Calculadora(double primeiroValor, double segundoValor)
         {
             PrimeiroValor = primeiroValor;
             SegundoValor = segundoValor;
@@ -63,16 +63,16 @@ namespace CalculadoraConsole.Models
             return PrimeiroValor / SegundoValor;
         }
 
-        public double Potenciacao(double primeiroValor)
+        public double Potenciacao()
         {
-            double soma = 0;
-            for(int i = 0; i < PrimeiroValor; i++) 
-            {
-                soma = PrimeiroValor * PrimeiroValor;
-            }
-            return soma;
+            double valor = Math.Pow(PrimeiroValor, SegundoValor);
+            return valor;
         }
 
-        // Radiciação
+        public double Radiciacao()
+        {
+            double raiz = Math.Pow(PrimeiroValor, 1.0 / SegundoValor);
+            return raiz;
+        }
     }
 }
