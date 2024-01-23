@@ -1,5 +1,6 @@
 ﻿using CalculadoraConsole.Models;
-using System.Security.Cryptography.X509Certificates;
+using CalculadoraConsole.Models.Exceptions;
+using System;
 
 namespace CalculadoraConsole
 {
@@ -7,19 +8,62 @@ namespace CalculadoraConsole
     {
         static void Main(string[] args)
         {
-            double um = double.Parse(Console.ReadLine());
-            double dois = double.Parse(Console.ReadLine());
+            TelaCalculadora calcTela = new TelaCalculadora();
+            calcTela.ExibirCalculadora();
 
-            Calculadora calc = new Calculadora(um, dois);
-            Console.WriteLine(calc.Somar());
-            Console.WriteLine(calc.Subtrair());
-            Console.WriteLine(calc.Multiplicar());
-            Console.WriteLine(calc.Dividir());
-            Console.WriteLine(calc.Potenciacao());
-            Console.WriteLine(calc.Radiciacao());
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Qual operação deseja realizar? ");
+                    int num = int.Parse(Console.ReadLine());
 
-            calc.ExibirCalculadora();
+                    if (num == 0)
+                    {
+                        Console.WriteLine("Obrigado por utilizar o Calculadora Console! :)");
+                        break;
+                    }
+                    else if (num < 1 || num > 6)
+                    {
+                        throw new CalculadoraException("Opção inválida.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Informe o primeiro valor a ser calculado:");
+                        double valor1 = double.Parse(Console.ReadLine());
+                        Console.WriteLine("Informe o segundo valor a ser calculado:");
+                        double valor2 = double.Parse(Console.ReadLine());
 
+                        Calculadora calc = new Calculadora(valor1, valor2);
+
+                        switch (num)
+                        {
+                            case 1:
+                                Console.WriteLine("Resultado: " + calc.Somar());
+                                break;
+                            case 2:
+                                Console.WriteLine("Resultado: " + calc.Subtrair());
+                                break;
+                            case 3:
+                                Console.WriteLine("Resultado: " + calc.Multiplicar());
+                                break;
+                            case 4:
+                                Console.WriteLine("Resultado: " + calc.Dividir());
+                                break;
+                            case 5:
+                                Console.WriteLine("Resultado: " + calc.Potenciacao());
+                                break;
+                            case 6:
+                                Console.WriteLine("Resultado: " + calc.Radiciacao());
+                                break;
+                        }
+                    }
+                }
+                catch (CalculadoraException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }
